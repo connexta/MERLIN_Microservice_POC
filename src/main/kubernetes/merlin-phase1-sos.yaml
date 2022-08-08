@@ -1,0 +1,66 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: merlin-phase1
+  name: namespace-reader
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps", "pods", "services", "endpoints", "secrets"]
+    verbs: ["get", "list", "watch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: namespace-reader-binding
+  namespace: merlin-phase1
+subjects:
+  - kind: ServiceAccount
+    name: default
+    apiGroup: ""
+roleRef:
+  kind: Role
+  name: namespace-reader
+  apiGroup: ""
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: merlin-phase1-sos-config
+  namespace: merlin-phase1
+data:
+  application.json:
+    ' {
+    "mil.afdcgs.merlin.sos.kafka.bootstrap-server": "kafka-0.kafka-headless.merlin-phase1.svc.cluster.local:9092",
+    "mil.afdcgs.merlin.sos.kafka.partition-count": "1",
+    "mil.afdcgs.merlin.sos.kafka.replica-count": "1"
+  }'
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: merlin-phase1-sos
+  namespace: merlin-phase1
+  labels:
+    name: merlin-phase1-sos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: merlin-phase1-sos
+  template:
+    metadata:
+      labels:
+        name: merlin-phase1-sos
+    spec:
+      containers:
+        - name: test-app
+          image: merlin-phase1-sos:latest
+          imagePullPolicy: Never
+          env:
+            - name: SPRING_APPLICATION_JSON
+              valueFrom:
+                configMapKeyRef:
+                  name: merlin-phase1-sos-config
+                  key: application.json
+
+
