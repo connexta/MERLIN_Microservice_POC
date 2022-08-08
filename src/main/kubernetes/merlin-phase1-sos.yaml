@@ -1,18 +1,19 @@
+---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: merlin-phase1
   name: namespace-reader
 rules:
   - apiGroups: [""]
     resources: ["configmaps", "pods", "services", "endpoints", "secrets"]
     verbs: ["get", "list", "watch"]
+
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
+
 metadata:
   name: namespace-reader-binding
-  namespace: merlin-phase1
 subjects:
   - kind: ServiceAccount
     name: default
@@ -21,12 +22,13 @@ roleRef:
   kind: Role
   name: namespace-reader
   apiGroup: ""
+
 ---
-apiVersion: v1
 kind: ConfigMap
+apiVersion: v1
+
 metadata:
   name: merlin-phase1-sos-config
-  namespace: merlin-phase1
 data:
   application.json:
     ' {
@@ -34,12 +36,13 @@ data:
     "mil.afdcgs.merlin.sos.kafka.partition-count": "1",
     "mil.afdcgs.merlin.sos.kafka.replica-count": "1"
   }'
+
 ---
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
+
 metadata:
   name: merlin-phase1-sos
-  namespace: merlin-phase1
   labels:
     name: merlin-phase1-sos
 spec:
@@ -62,5 +65,3 @@ spec:
                 configMapKeyRef:
                   name: merlin-phase1-sos-config
                   key: application.json
-
-

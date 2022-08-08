@@ -31,8 +31,6 @@ The project uses these modules:
 * `spring-boot-starter-actuator` - This module allows us to monitor the service health and metrics through `HTTP`.
 * `spring-boot-starter-websocket` - a Spring library for handing websockets.
 * `spring-kafka` - a Spring library for connecting to `Kafka` and using it in a Spring-like fashion.
-* `spring-cloud-starter-kubernetes-client-config` - Allows Spring Boot to read property values from a `Kubernetes` 
-  `ConfigMap`.
 
 # Build
 
