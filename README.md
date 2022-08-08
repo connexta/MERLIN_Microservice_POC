@@ -48,7 +48,7 @@ uploaded to the `Kubernetes` node. The instructions given here are for `k3s`, bu
 provide an equivalent process.
 
 ```shell
-$ docker save --output merlin-phase1-sos-latest.tar merlin-phase1-sos:latest
+$ docker save --output target/merlin-phase1-sos-latest.tar merlin-phase1-sos:latest
 ```
 ```shell
 $ sudo k3s ctr images import target/merlin-phase1-sos-latest.tar
