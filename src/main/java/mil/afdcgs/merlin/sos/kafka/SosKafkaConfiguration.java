@@ -28,13 +28,13 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 class KafkaStreamConfiguration {
-    @Value("${mil.afdcgs.merlin.sos.kafka.partition-count}")
+    @Value("${mil.afdcgs.merlin.sos.kafka.partition-count:1}")
     private Integer partitionCount;
 
     @Value("${mil.afdcgs.merlin.sos.kafka.replica-count:1}")
     private Integer replicaCount;
 
-    @Value("${mil.afdcgs.merlin.sos.kafka.bootstrap-server:1}")
+    @Value("${mil.afdcgs.merlin.sos.kafka.bootstrap-server}")
     private String bootstrapServer;
 
     @Bean
@@ -130,11 +130,6 @@ class KafkaStreamConfiguration {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory();
         factory.setConsumerFactory(consumerFactory());
         return factory;
-    }
-
-    @PostConstruct
-    public void dumpValues() {
-        System.out.println("application name = " + System.getProperty("spring.application.name"));
     }
 }
 
