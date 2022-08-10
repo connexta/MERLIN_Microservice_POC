@@ -57,7 +57,7 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: merlin-phase1-sos:latest
+          image: registry.local/merlin-phase1-sos:latest
           imagePullPolicy: Never
           env:
             - name: SPRING_APPLICATION_JSON
