@@ -16,7 +16,8 @@
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
-        <jib-docker-maven-plugin.version>2.5.2</jib-docker-maven-plugin.version>
+        <jib-docker-maven-plugin.version>3.2.1</jib-docker-maven-plugin.version>
+        <docker-registry>registry.local</docker-registry>
     </properties>
     <dependencies>
         <dependency>
@@ -71,7 +72,7 @@
                         <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                     </container>
                     <to>
-                        <image>${project.artifactId}</image>
+                        <image>${docker-registry}/${project.artifactId}</image>
                         <tags>
                             <tag>${project.version}</tag>
                         </tags>

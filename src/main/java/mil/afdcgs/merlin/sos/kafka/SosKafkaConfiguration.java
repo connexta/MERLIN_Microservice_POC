@@ -28,7 +28,7 @@ import java.util.Map;
 
 @EnableKafka
 @Configuration
-class KafkaStreamConfiguration {
+class SosKafkaConfiguration {
     @Value("${mil.afdcgs.merlin.sos.kafka.partition-count:1}")
     private Integer partitionCount;
 
