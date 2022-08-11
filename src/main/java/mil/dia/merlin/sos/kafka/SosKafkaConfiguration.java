@@ -1,4 +1,4 @@
-package mil.afdcgs.merlin.sos.kafka;
+package mil.dia.merlin.sos.kafka;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;

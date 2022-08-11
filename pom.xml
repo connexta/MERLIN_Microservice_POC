@@ -8,8 +8,8 @@
         <version>2.7.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>mil.afdcgs.merlin</groupId>
-    <artifactId>merlin-phase1-sos</artifactId>
+    <groupId>mil.dia.merlin</groupId>
+    <artifactId>merlin-sos</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>merlin-phase1-sos</name>
     <description>Routes SoS messages across Kafka topics</description>
