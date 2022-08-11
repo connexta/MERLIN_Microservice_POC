@@ -58,7 +58,6 @@ spec:
       containers:
         - name: test-app
           image: registry.local/merlin-sos:latest
-          imagePullPolicy: Never
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:
