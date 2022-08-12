@@ -32,7 +32,7 @@ metadata:
 data:
   application.json:
     ' {
-    "mil.afdcgs.merlin.sos.kafka.bootstrap-server": "kafka-0.kafka-headless.merlin-phase1.svc.cluster.local:9092",
+    "mil.afdcgs.merlin.sos.kafka.bootstrap-server": "kafka.merlin-phase1.svc.cluster.local:9092",
     "mil.afdcgs.merlin.sos.kafka.partition-count": "1",
     "mil.afdcgs.merlin.sos.kafka.replica-count": "1"
   }'

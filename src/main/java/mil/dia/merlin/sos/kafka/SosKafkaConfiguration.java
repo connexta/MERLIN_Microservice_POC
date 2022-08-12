@@ -54,22 +54,6 @@ class SosKafkaConfiguration {
     }
 
     @Bean
-    public NewTopic capabilitiesXml() {
-        return TopicBuilder.name("stream-merlin-capabilities-json")
-                .partitions(partitionCount)
-                .replicas(replicaCount)
-                .build();
-    }
-
-    @Bean
-    public NewTopic capabilitiesJson() {
-        return TopicBuilder.name("stream-merlin-input")
-                .partitions(partitionCount)
-                .replicas(replicaCount)
-                .build();
-    }
-
-    @Bean
     public NewTopic observationsXml() {
         return TopicBuilder.name( "stream-merlin-observations-xml")
                 .partitions(partitionCount)
