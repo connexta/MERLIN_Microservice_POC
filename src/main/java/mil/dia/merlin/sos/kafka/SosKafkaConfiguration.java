@@ -46,8 +46,16 @@ class SosKafkaConfiguration {
     }
 
     @Bean
-    public NewTopic input() {
-        return TopicBuilder.name("stream-merlin-input")
+    public NewTopic sensorInput() {
+        return TopicBuilder.name("merlin-sensor-input")
+                .partitions(partitionCount)
+                .replicas(replicaCount)
+                .build();
+    }
+
+    @Bean
+    public NewTopic observationInput() {
+        return TopicBuilder.name("merlin-observation-input")
                 .partitions(partitionCount)
                 .replicas(replicaCount)
                 .build();
@@ -55,7 +63,7 @@ class SosKafkaConfiguration {
 
     @Bean
     public NewTopic observationsXml() {
-        return TopicBuilder.name( "stream-merlin-observations-xml")
+        return TopicBuilder.name( "merlin-observations-xml")
                 .partitions(partitionCount)
                 .replicas(replicaCount)
                 .build();
@@ -63,7 +71,7 @@ class SosKafkaConfiguration {
 
     @Bean
     public NewTopic observationsJson() {
-        return TopicBuilder.name("stream-merlin-observations-json")
+        return TopicBuilder.name("merlin-observations-json")
                 .partitions(partitionCount)
                 .replicas(replicaCount)
                 .build();
@@ -71,7 +79,7 @@ class SosKafkaConfiguration {
 
     @Bean
     public NewTopic sensorsXml() {
-        return TopicBuilder.name( "stream-merlin-sensors-xml")
+        return TopicBuilder.name( "merlin-sensors-xml")
                 .partitions(partitionCount)
                 .replicas(replicaCount)
                 .build();
@@ -79,7 +87,7 @@ class SosKafkaConfiguration {
 
     @Bean
     public NewTopic sensorsJson() {
-        return TopicBuilder.name("stream-merlin-sensors-json")
+        return TopicBuilder.name("merlin-sensors-json")
                 .partitions(partitionCount)
                 .replicas(replicaCount)
                 .build();

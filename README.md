@@ -47,8 +47,19 @@ For local development and testing, where the image can't be pushed to a `Docker`
 uploaded to the `Kubernetes` node. The instructions given here are for `k3s`, but any locally-hosted `Kubernetes` should
 provide an equivalent process.
 
+Note: If you're running on Docker Desktop then this step is not required.
+
+### On `k3s` *with* a local Docker registry desployed in the cluster:
 ```shell
-$ docker save --output target/merlin-phase1-sos-latest.tar merlin-phase1-sos:latest
+$ docker push registry.local/merlin-sos:latest
+```
+```shell
+$ kubectl apply -f src/main/kubernetes/merlin-phase1-sos.yaml
+```
+
+### On `k3s` *without* a Docker registry deployed in the cluster:
+```shell
+$ docker save --output target/merlin-phase1-sos-latest.tar registry.local/merlin-phase1-sos:latest
 ```
 ```shell
 $ sudo k3s ctr images import target/merlin-phase1-sos-latest.tar
@@ -58,7 +69,7 @@ $ kubectl apply -f src/main/kubernetes/merlin-phase1-sos.yaml
 ```
 
 ## Test/Production Environments
-In an environment where the service has been uploaded to a `Docker` repository, it can be deployed with:
+In an environment where the service has been pushed to a `Docker` repository, it can be deployed with:
 ```shell
 $ kubectl apply -f src/main/kubernetes/merlin-phase1-sos.yaml
 ```
