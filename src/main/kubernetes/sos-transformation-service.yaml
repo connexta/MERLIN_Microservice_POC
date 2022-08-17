@@ -28,7 +28,7 @@ kind: ConfigMap
 apiVersion: v1
 
 metadata:
-  name: merlin-sos-config
+  name: sos-transform-service-config
 data:
   application.json:
     ' {
@@ -42,25 +42,25 @@ kind: Deployment
 apiVersion: apps/v1
 
 metadata:
-  name: merlin-sos
+  name: sos-transformation-service
   labels:
-    name: merlin-sos
+    name: sos-transformation-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: merlin-sos
+      name: sos-transformation-service
   template:
     metadata:
       labels:
-        name: merlin-sos
+        name: sos-transformation-service
     spec:
       containers:
         - name: test-app
-          image: registry.local/merlin-sos:latest
+          image: registry.local/sos-transformation-service:latest
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:
                 configMapKeyRef:
-                  name: merlin-sos-config
+                  name: sos-transform-service-config
                   key: application.json

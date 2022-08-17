@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>mil.dia.merlin</groupId>
-    <artifactId>merlin-sos</artifactId>
+    <artifactId>sos-transformation-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>merlin-phase1-sos</name>
     <description>Routes SoS messages across Kafka topics</description>

@@ -1,6 +1,6 @@
 # Purpose 
 
-The Merlin SoS message transformation service receives data from the `stream-merlin-input` Kafka topic, determines the 
+The Merlin SoS message transformation service receives data from the Kafka `input` topics, determines the 
 content-type of the message, transforms its contents to `JSON` and then routes both the `XML` and `JSON` data to the 
 appropriate topics. This service also ensures that the required topics are in-place at start-up.
 
@@ -29,7 +29,6 @@ Boot` at deployment time. The following properties are supported:
 The project uses these modules:
 
 * `spring-boot-starter-actuator` - This module allows us to monitor the service health and metrics through `HTTP`.
-* `spring-boot-starter-websocket` - a Spring library for handing websockets.
 * `spring-kafka` - a Spring library for connecting to `Kafka` and using it in a Spring-like fashion.
 
 # Build
@@ -43,41 +42,33 @@ This will create a `Docker` container image and upload it to the local `Docker` 
 
 # Deployment
 ## Local Development
-For local development and testing, where the image can't be pushed to a `Docker` repository, then the image should be
-uploaded to the `Kubernetes` node. The instructions given here are for `k3s`, but any locally-hosted `Kubernetes` should
-provide an equivalent process.
+For local development and testing, the process for making the built images available to the `kubernetes` cluster is 
+dependent upon the `Kubernetes` 
 
 Note: If you're running on Docker Desktop then this step is not required.
 
 ### On `k3s` *with* a local Docker registry desployed in the cluster:
 ```shell
-$ docker push registry.local/merlin-sos:latest
-```
-```shell
-$ kubectl apply -f src/main/kubernetes/merlin-phase1-sos.yaml
+$ docker push registry.local/sos-transformation-service:latest
 ```
 
 ### On `k3s` *without* a Docker registry deployed in the cluster:
 ```shell
-$ docker save --output target/merlin-phase1-sos-latest.tar registry.local/merlin-phase1-sos:latest
+$ docker save --output target/sos-transformation-service-latest.tar registry.local/sos-transformation-service:latest
 ```
 ```shell
-$ sudo k3s ctr images import target/merlin-phase1-sos-latest.tar
-```
-```shell
-$ kubectl apply -f src/main/kubernetes/merlin-phase1-sos.yaml
+$ sudo k3s ctr images import target/sos-transformation-service-latest.tar
 ```
 
-## Test/Production Environments
-In an environment where the service has been pushed to a `Docker` repository, it can be deployed with:
+## Create Kubernetes Artifcats
 ```shell
-$ kubectl apply -f src/main/kubernetes/merlin-phase1-sos.yaml
+$ kubectl apply -f src/main/kubernetes/sos-transformation-service.yaml
 ```
 
 ## Uninstall
 It can be removed with:
 ```shell
-$ kubectl delete -f src/main/kubernetes/merlin-phase1-sos.yaml
+$ kubectl delete -f src/main/kubernetes/sos-transformation-service.yaml
 ```
 
 
