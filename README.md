@@ -49,12 +49,12 @@ Note: If you're running on Docker Desktop then this step is not required.
 
 ### On `k3s` *with* a local Docker registry desployed in the cluster:
 ```shell
-$ docker push registry.local/sos-transformation-service:latest
+$ docker push registry.localdev.me/sos-transformation-service:latest
 ```
 
 ### On `k3s` *without* a Docker registry deployed in the cluster:
 ```shell
-$ docker save --output target/sos-transformation-service-latest.tar registry.local/sos-transformation-service:latest
+$ docker save --output target/sos-transformation-service-latest.tar registry.localdev.me/sos-transformation-service:latest
 ```
 ```shell
 $ sudo k3s ctr images import target/sos-transformation-service-latest.tar

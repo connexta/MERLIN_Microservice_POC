@@ -17,7 +17,7 @@
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <jib-docker-maven-plugin.version>3.2.1</jib-docker-maven-plugin.version>
-        <docker-registry>registry.local</docker-registry>
+        <docker-registry>registry.localdev.me</docker-registry>
     </properties>
     <dependencies>
         <dependency>
