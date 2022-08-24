@@ -6,22 +6,25 @@ appropriate topics. This service also ensures that the required topics are in-pl
 
 # Project Structure
 
-* `src/main/java` - the service source code
-* `src/main/test` - unit tests
-* `src/main/kubernetes` - `Kubernetes` artifacts
+This service consists of 2 containers. 
 
-This is a `Spring Boot` application which is deployed in `Kubernetes`. The container is built using the `jib` plugin
-for `Maven`.
+* `sos-transformer-initializer` simply creates the topics that `sos-transformer-service` depends on and then exits.
+* `sos-transformer-service` is a long-running process that completes the actual transformations and routes messages 
+  between topics.
+* `kubernetes` - `Kubernetes` artifacts
+
+Both of these containers are `Spring Boot` applications which are deployed in `Kubernetes`. The containers are built 
+using the `jib` plugin for `Maven`.
 
 ## Configuration
 
 The application configuration is handled through a `Kubernetes` `ConfigMap` which is automatically read in by `Spring
 Boot` at deployment time. The following properties are supported:
 
-* [required]`mil.afdcgs.merlin.sos.kafka.bootstrap-server`: the `DNS` name of the `Kafka` bootstrap server to connect 
+* [required]`mil.dia.merlin.sos.kafka.bootstrap-server`: the `DNS` name of the `Kafka` bootstrap server to connect 
   to.
-* [default 1] `mil.afdcgs.merlin.sos.kafka.partition-count`: the number of partitions for each created topic. 
-* [default 1] `mil.afdcgs.merlin.sos.kafka.replica-count`: the number of partition replicas to create across the 
+* [default 1] `mil.dia.merlin.sos.kafka.partition-count`: the number of partitions for each created topic. 
+* [default 1] `mil.dia.merlin.sos.kafka.replica-count`: the number of partition replicas to create across the 
   cluster. This number can't exceed the number of nodes in the cluster. 
   
 ## Dependencies
@@ -33,12 +36,15 @@ The project uses these modules:
 
 # Build
 
-To build the project:
+To build both services from the parent directory:
 ```shell
 mvn clean install
 ```
 
-This will create a `Docker` container image and upload it to the local `Docker` repository.
+This will create 2 `Docker` container images on the local machine. The container names are:
+
+* registry.localdev.me/sos-transformer-initializer
+* registry.localdev.me/sos-transformer-service
 
 # Deployment
 ## Local Development
@@ -49,15 +55,18 @@ Note: If you're running on Docker Desktop then this step is not required.
 
 ### On `k3s` *with* a local Docker registry desployed in the cluster:
 ```shell
-$ docker push registry.localdev.me/sos-transformation-service:latest
+$ docker push registry.localdev.me/sos-transformer-initializer:latest
+$ docker push registry.localdev.me/sos-transformer-service:latest
 ```
 
 ### On `k3s` *without* a Docker registry deployed in the cluster:
 ```shell
-$ docker save --output target/sos-transformation-service-latest.tar registry.localdev.me/sos-transformation-service:latest
+$ docker save --output target/sos-transformer-initializer-latest.tar registry.localdev.me/sos-transformer-initializer:latest
+$ docker save --output target/sos-transformer-service-latest.tar registry.localdev.me/sos-transformer-service:latest
 ```
 ```shell
-$ sudo k3s ctr images import target/sos-transformation-service-latest.tar
+$ sudo k3s ctr images import target/sos-transformer-initializer-latest.tar
+$ sudo k3s ctr images import target/sos-transformer-service-latest.tar
 ```
 
 ## Create Kubernetes Artifcats

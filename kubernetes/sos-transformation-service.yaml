@@ -32,9 +32,9 @@ metadata:
 data:
   application.json:
     ' {
-    "mil.afdcgs.merlin.sos.kafka.bootstrap-server": "kafka-0.kafka-headless.merlin-phase1.svc.cluster.local:9092",
-    "mil.afdcgs.merlin.sos.kafka.partition-count": "1",
-    "mil.afdcgs.merlin.sos.kafka.replica-count": "1"
+    "mil.dia.merlin.sos.kafka.bootstrap-server": "kafka-0.kafka-headless.merlin-phase1.svc.cluster.local:9092",
+    "mil.dia.merlin.sos.kafka.partition-count": "1",
+    "mil.dia.merlin.sos.kafka.replica-count": "1"
   }'
 
 ---
@@ -55,9 +55,18 @@ spec:
       labels:
         name: sos-transformation-service
     spec:
+      initContainers:
+        - name: sos-transformer-initializer
+          image: registry.localdev.me/sos-transformer-initializer:latest
+          env:
+            - name: SPRING_APPLICATION_JSON
+              valueFrom:
+                configMapKeyRef:
+                  name: sos-transform-service-config
+                  key: application.json
       containers:
-        - name: test-app
-          image: registry.localdev.me/sos-transformation-service:latest
+        - name: sos-transformer-service
+          image: registry.localdev.me/sos-transformer-service:latest
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:

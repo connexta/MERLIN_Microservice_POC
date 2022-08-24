@@ -1,7 +1,5 @@
 package mil.dia.merlin.sos.kafka;
 
-import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
@@ -14,11 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
-import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
@@ -29,69 +25,8 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 class SosKafkaConfiguration {
-    @Value("${mil.afdcgs.merlin.sos.kafka.partition-count:1}")
-    private Integer partitionCount;
-
-    @Value("${mil.afdcgs.merlin.sos.kafka.replica-count:1}")
-    private Integer replicaCount;
-
-    @Value("${mil.afdcgs.merlin.sos.kafka.bootstrap-server}")
+    @Value("${mil.dia.merlin.sos.kafka.bootstrap-server}")
     private String bootstrapServer;
-
-    @Bean
-    public KafkaAdmin kafkaAdmin() {
-        Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-        return new KafkaAdmin(configs);
-    }
-
-    @Bean
-    public NewTopic sensorInput() {
-        return TopicBuilder.name("merlin-sensor-input")
-                .partitions(partitionCount)
-                .replicas(replicaCount)
-                .build();
-    }
-
-    @Bean
-    public NewTopic observationInput() {
-        return TopicBuilder.name("merlin-observation-input")
-                .partitions(partitionCount)
-                .replicas(replicaCount)
-                .build();
-    }
-
-    @Bean
-    public NewTopic observationsXml() {
-        return TopicBuilder.name( "merlin-observations-xml")
-                .partitions(partitionCount)
-                .replicas(replicaCount)
-                .build();
-    }
-
-    @Bean
-    public NewTopic observationsJson() {
-        return TopicBuilder.name("merlin-observations-json")
-                .partitions(partitionCount)
-                .replicas(replicaCount)
-                .build();
-    }
-
-    @Bean
-    public NewTopic sensorsXml() {
-        return TopicBuilder.name( "merlin-sensors-xml")
-                .partitions(partitionCount)
-                .replicas(replicaCount)
-                .build();
-    }
-
-    @Bean
-    public NewTopic sensorsJson() {
-        return TopicBuilder.name("merlin-sensors-json")
-                .partitions(partitionCount)
-                .replicas(replicaCount)
-                .build();
-    }
 
     @Bean
     public ConsumerFactory<Integer, String> consumerFactory(){
