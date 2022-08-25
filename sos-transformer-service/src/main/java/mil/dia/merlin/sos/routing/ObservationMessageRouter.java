@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 class ObservationMessageRouter {
+    public static final String MERLIN_OBSERVATION_MESSAGE_ROUTER_KAFKA_ID = "merlin-observation-message-router";
+    public static final String MERLIN_OBSERVATION_INPUT_TOPIC = "merlin-observation-input";
+    public static final String MERLIN_OBSERVATIONS_JSON_TOPIC = "merlin-observations-json";
+
     private Logger logger = LoggerFactory.getLogger(ObservationMessageRouter.class);
 
     private KafkaTemplate kafkaTemplate;
@@ -16,10 +20,10 @@ class ObservationMessageRouter {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @KafkaListener(id = "merlin-observation-message-router", topics = {"merlin-observation-input"})
+    @KafkaListener(id = MERLIN_OBSERVATION_MESSAGE_ROUTER_KAFKA_ID, topics = {MERLIN_OBSERVATION_INPUT_TOPIC})
     public void onSensor(String sensorText) {
         logger.info("Received: " + sensorText);
-        kafkaTemplate.send("merlin-observations-json", transform(sensorText));
+        kafkaTemplate.send(MERLIN_OBSERVATIONS_JSON_TOPIC, transform(sensorText));
     }
 
     private String transform(String input) {
