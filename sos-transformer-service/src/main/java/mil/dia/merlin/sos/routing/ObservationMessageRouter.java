@@ -3,30 +3,33 @@ package mil.dia.merlin.sos.routing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Component
 class ObservationMessageRouter {
-    public static final String MERLIN_OBSERVATION_MESSAGE_ROUTER_KAFKA_ID = "merlin-observation-message-router";
-    public static final String MERLIN_OBSERVATION_INPUT_TOPIC = "merlin-observation-input";
-    public static final String MERLIN_OBSERVATIONS_JSON_TOPIC = "merlin-observations-json";
+    static final String KAFKA_GROUP_ID = "merlin-observation-message-router";
+    static final String OBSERVATION_INPUT = "merlin-observation-input";
+
+    private final Consumer<String> observationMessageConsumer;
 
     private Logger logger = LoggerFactory.getLogger(ObservationMessageRouter.class);
 
-    private KafkaTemplate kafkaTemplate;
+    private Function<String, String> observationMessageTransformer;
 
-    public ObservationMessageRouter(KafkaTemplate kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
+    public ObservationMessageRouter(Function<String, String> observationMessageTransformer,
+                                    Consumer<String> observationMessageConsumer) {
+        this.observationMessageTransformer = observationMessageTransformer;
+        this.observationMessageConsumer = observationMessageConsumer;
     }
 
-    @KafkaListener(id = MERLIN_OBSERVATION_MESSAGE_ROUTER_KAFKA_ID, topics = {MERLIN_OBSERVATION_INPUT_TOPIC})
-    public void onSensor(String sensorText) {
-        logger.info("Received: " + sensorText);
-        kafkaTemplate.send(MERLIN_OBSERVATIONS_JSON_TOPIC, transform(sensorText));
-    }
-
-    private String transform(String input) {
-        return input;
+    @KafkaListener(id = KAFKA_GROUP_ID, topics = {OBSERVATION_INPUT})
+    public void onObservation(String observationText) {
+        logger.info("Received Observation: " + observationText);
+        String newMessage = observationMessageTransformer.apply(observationText);
+        observationMessageConsumer.accept(newMessage);
+        logger.info("Published Observation: " + newMessage);
     }
 }
