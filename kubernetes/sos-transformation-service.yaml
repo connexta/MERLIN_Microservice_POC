@@ -58,7 +58,6 @@ spec:
       initContainers:
         - name: sos-transformer-initializer
           image: registry.localdev.me/sos-transformer-initializer:latest
-          imagePullPolicy: IfNotPresent
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:
@@ -68,7 +67,6 @@ spec:
       containers:
         - name: sos-transformer-service
           image: registry.localdev.me/sos-transformer-service:latest
-          imagePullPolicy: IfNotPresent
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:

@@ -7,11 +7,14 @@
     <groupId>mil.dia.merlin</groupId>
     <artifactId>sos-transformation-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <name>merlin-phase1-sos</name>
     <description>Routes SoS messages across Kafka topics</description>
 
     <properties>
         <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <jib-docker-maven-plugin.version>3.2.1</jib-docker-maven-plugin.version>
         <docker-registry>registry.localdev.me</docker-registry>
     </properties>

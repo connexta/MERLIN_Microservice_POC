@@ -6,16 +6,10 @@
         <artifactId>sos-transformation-service</artifactId>
         <groupId>mil.dia.merlin</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sos-transformer-initializer</artifactId>
-
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
 
     <dependencies>
         <dependency>

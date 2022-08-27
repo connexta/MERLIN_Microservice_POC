@@ -78,5 +78,13 @@ class KafkaTopicConfiguration {
                 .replicas(replicaCount)
                 .build();
     }
+
+    @Bean
+    public NewTopic sensorsUIJson() {
+        return TopicBuilder.name("merlin-sensors-ui")
+                .partitions(partitionCount)
+                .replicas(replicaCount)
+                .build();
+    }
 }
 

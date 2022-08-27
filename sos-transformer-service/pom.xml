@@ -6,15 +6,16 @@
         <artifactId>sos-transformation-service</artifactId>
         <groupId>mil.dia.merlin</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sos-transformer-service</artifactId>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <ogc.schema.version>3.0.0</ogc.schema.version>
+        <json-simple.version>1.1.1</json-simple.version>
+        <jaxb-api.version>2.3.1</jaxb-api.version>
+        <jackson.version>2.13.3</jackson.version>
     </properties>
 
     <dependencies>
@@ -31,6 +32,67 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mil.dia.merlin</groupId>
+            <artifactId>SWEXmlParser</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>${jaxb-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.ogc-schemas/om-v_2_0 -->
+        <dependency>
+            <groupId>org.ogc-schemas</groupId>
+            <artifactId>om-v_2_0</artifactId>
+            <version>${ogc.schema.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.ogc-schemas/sensorML-v_1_0_1 -->
+        <dependency>
+            <groupId>org.ogc-schemas</groupId>
+            <artifactId>sensorML-v_1_0_1</artifactId>
+            <version>${ogc.schema.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.ogc-schemas/sos-v_2_0 -->
+        <dependency>
+            <groupId>org.ogc-schemas</groupId>
+            <artifactId>sos-v_2_0</artifactId>
+            <version>${ogc.schema.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.ogc-schemas/sweCommon-v_2_0 -->
+        <dependency>
+            <groupId>org.ogc-schemas</groupId>
+            <artifactId>sweCommon-v_2_0</artifactId>
+            <version>${ogc.schema.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.ogc-schemas/samplingSpatial-v_2_0 -->
+        <dependency>
+            <groupId>org.ogc-schemas</groupId>
+            <artifactId>samplingSpatial-v_2_0</artifactId>
+            <version>${ogc.schema.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>${json-simple.version}</version>
         </dependency>
     </dependencies>
 
