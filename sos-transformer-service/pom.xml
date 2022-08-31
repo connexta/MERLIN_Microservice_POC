@@ -16,6 +16,8 @@
         <json-simple.version>1.1.1</json-simple.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <jackson.version>2.13.3</jackson.version>
+        <jackson-jq.version>0.0.13</jackson-jq.version>
+        <jackson-jq-extra.version>0.0.13</jackson-jq-extra.version>
     </properties>
 
     <dependencies>
@@ -96,9 +98,15 @@
         </dependency>
 
         <dependency>
-            <groupId>com.arakelian</groupId>
-            <artifactId>java-jq</artifactId>
-            <version>1.3.0</version>
+            <groupId>net.thisptr</groupId>
+            <artifactId>jackson-jq</artifactId>
+            <version>${jackson-jq.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.thisptr</groupId>
+            <artifactId>jackson-jq-extra</artifactId>
+            <version>${jackson-jq-extra.version}</version>
         </dependency>
     </dependencies>
 
